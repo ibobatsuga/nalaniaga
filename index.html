@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="description" content="NalaNiaga — CRM Freelancer & Agensi Kreatif. Pipeline Prospek, Manajemen Klien, Generator Invoice & Jadwal Follow-up.">
+  <title>NalaNiaga — CRM Freelancer & Agensi</title>
+
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- APP HEADER -->
+  <header class="app-header no-print">
+    <div class="header-inner container-fluid">
+      <div class="brand">
+        <div class="brand-logo">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/>
+          </svg>
+        </div>
+        <div class="brand-info">
+          <div class="brand-title">NalaNiaga <span class="badge-pro">PRO CRM</span></div>
+          <div class="brand-sub">Solusi Pipeline Klien & Invoice Agensi</div>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="nav-tabs" role="tablist">
+        <button type="button" class="nav-tab active" data-view="kanban">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18M15 3v18"/></svg>
+          <span>Pipeline Deals</span>
+        </button>
+        <button type="button" class="nav-tab" data-view="clients">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span>Database Klien</span>
+        </button>
+        <button type="button" class="nav-tab" data-view="invoices">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <span>Invoice & Penawaran</span>
+        </button>
+        <button type="button" class="nav-tab" data-view="followups">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span>Jadwal Follow-up</span>
+        </button>
+        <button type="button" class="nav-tab" data-view="analytics">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+          <span>Statistik Omzet</span>
+        </button>
+      </nav>
+
+      <!-- Quick Action Right -->
+      <div class="header-tools">
+        <button type="button" class="btn-sm-primary" id="btnQuickAddDeal">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <span>Tambah Deal</span>
+        </button>
+        <div class="online-indicator" title="Mode Offline PWA Siap">
+          <span class="indicator-dot"></span>
+          <span>Online</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN APP CONTAINER -->
+  <main class="main-container container-fluid">
+
+    <!-- VIEW 1: PIPELINE DEALS (KANBAN BOARD) -->
+    <section id="viewKanban" class="app-view active">
+      <!-- Pipeline Metric Header Bar -->
+      <div class="pipeline-bar card">
+        <div class="pipeline-meta">
+          <div>
+            <h2 class="pipeline-title">Kanban Pipeline Prospek & Proyek</h2>
+            <p class="pipeline-sub">Pantau alur konversi calon klien dari tahap inquiry hingga pelunasan proyek.</p>
+          </div>
+        </div>
+
+        <div class="pipeline-summary-stats">
+          <div class="p-stat-box">
+            <span class="p-stat-label">Total Potensi Pipeline</span>
+            <strong class="p-stat-val text-indigo" id="pipeTotalPotensi">Rp 0</strong>
+          </div>
+          <div class="p-stat-box">
+            <span class="p-stat-label">Proyek Aktif Berjalan</span>
+            <strong class="p-stat-val text-emerald" id="pipeActiveCount">0 Deal</strong>
+          </div>
+          <div class="p-stat-box">
+            <span class="p-stat-label">Selesai & Lunas Bulan Ini</span>
+            <strong class="p-stat-val text-sky" id="pipeWonValue">Rp 0</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- KANBAN BOARD CONTAINER -->
+      <div class="kanban-wrapper">
+        <div class="kanban-board" id="kanbanBoard">
+          <!-- 5 Columns rendered by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 2: DATABASE KLIEN -->
+    <section id="viewClients" class="app-view">
+      <div class="section-head-bar card">
+        <div>
+          <h2>Database Kontak & Profil Klien</h2>
+          <p>Catatan riwayat klien, total nilai transaksi (*Lifetime Value*), dan tautan cepat kontak WhatsApp.</p>
+        </div>
+        <div class="head-actions">
+          <button type="button" class="btn-secondary" id="btnExportClientsCsv">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span>Export CSV</span>
+          </button>
+          <button type="button" class="btn-primary" id="btnOpenAddClientModal">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <span>Tambah Klien Baru</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Search & Filter Bar -->
+      <div class="filter-search-bar card">
+        <div class="search-input-wrap">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="clientSearchInput" placeholder="Cari berdasarkan nama klien, brand, atau kota...">
+        </div>
+        <select id="clientStatusFilter" class="filter-select">
+          <option value="ALL">Semua Kategori</option>
+          <option value="VIP">Klien VIP / Prioritas</option>
+          <option value="Aktif">Klien Aktif</option>
+          <option value="Prospek">Calon Klien</option>
+        </select>
+      </div>
+
+      <!-- Clients Table -->
+      <div class="table-card card">
+        <div class="table-responsive">
+          <table class="data-table" id="clientsTable">
+            <thead>
+              <tr>
+                <th>Perusahaan / Brand</th>
+                <th>Kontak Person</th>
+                <th>No. WhatsApp / Email</th>
+                <th>Kategori Klien</th>
+                <th>Total Proyek</th>
+                <th>Total Nilai (LTV)</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="clientsTableBody">
+              <!-- Rendered by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 3: INVOICE & PENAWARAN (GENERATOR) -->
+    <section id="viewInvoices" class="app-view">
+      <div class="section-head-bar card">
+        <div>
+          <h2>Generator Invoice & Penawaran Proyek</h2>
+          <p>Terbitkan tagihan formal, invoice DP, pelunasan, atau proposal harga resmi siap cetak / PDF.</p>
+        </div>
+        <div class="head-actions">
+          <button type="button" class="btn-primary" id="btnCreateNewInvoice">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <span>Buat Invoice Baru</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Invoices List -->
+      <div class="table-card card">
+        <div class="table-responsive">
+          <table class="data-table" id="invoicesTable">
+            <thead>
+              <tr>
+                <th>Nomor Invoice</th>
+                <th>Klien / Proyek</th>
+                <th>Tanggal Terbit</th>
+                <th>Jatuh Tempo</th>
+                <th>Total Tagihan</th>
+                <th>Status Pembayaran</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="invoicesTableBody">
+              <!-- Rendered by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 4: JADWAL FOLLOW-UP -->
+    <section id="viewFollowups" class="app-view">
+      <div class="section-head-bar card">
+        <div>
+          <h2>Jadwal Follow-up & Aktivitas Prospek</h2>
+          <p>Daftar pengingat janji temu, pengiriman proposal, dan follow-up penawaran ke calon klien.</p>
+        </div>
+        <button type="button" class="btn-primary" id="btnOpenAddFollowup">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <span>Catat Follow-up</span>
+        </button>
+      </div>
+
+      <div class="followup-grid" id="followupGrid">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- VIEW 5: STATISTIK & REKAP OMZET -->
+    <section id="viewAnalytics" class="app-view">
+      <!-- 4 Top Cards -->
+      <div class="analytics-metrics-grid">
+        <div class="metric-card card">
+          <div class="metric-icon icon-indigo">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <div class="metric-info">
+            <span class="metric-label">Realisasi Omzet Lunas</span>
+            <div class="metric-val text-emerald" id="metricWonRevenue">Rp 0</div>
+            <span class="metric-desc">Akumulasi seluruh proyek selesai</span>
+          </div>
+        </div>
+
+        <div class="metric-card card">
+          <div class="metric-icon icon-amber">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div class="metric-info">
+            <span class="metric-label">Pipeline Aktif (On Going)</span>
+            <div class="metric-val text-indigo" id="metricActivePipeline">Rp 0</div>
+            <span class="metric-desc">Proyek dalam tahap pengerjaan & negosiasi</span>
+          </div>
+        </div>
+
+        <div class="metric-card card">
+          <div class="metric-icon icon-emerald">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+          </div>
+          <div class="metric-info">
+            <span class="metric-label">Win Rate Konversi</span>
+            <div class="metric-val text-indigo" id="metricWinRate">0%</div>
+            <span class="metric-desc" id="metricWinRatio">0 deal sukses</span>
+          </div>
+        </div>
+
+        <div class="metric-card card">
+          <div class="metric-icon icon-sky">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="metric-info">
+            <span class="metric-label">Total Klien Terdaftar</span>
+            <div class="metric-val text-main" id="metricTotalClients">0</div>
+            <span class="metric-desc">Database klien agensi</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Breakdown by Service Category -->
+      <div class="analytics-panels-grid">
+        <div class="card">
+          <h3 class="panel-title">Distribusi Kategori Layanan / Proyek</h3>
+          <div class="service-dist-list" id="serviceDistList">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="panel-title">Aktivitas & Log CRM Terkini</h3>
+          <div class="activity-log-list" id="activityLogList">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL: TAMBAH / EDIT DEAL -->
+  <div class="modal-backdrop" id="dealModal" hidden>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="dealModalTitle">Tambah Proyek / Deal Baru</h3>
+          <button type="button" class="btn-close" id="btnCloseDealModal">&times;</button>
+        </div>
+        <form id="formDeal" class="modal-form">
+          <input type="hidden" id="dealIdInput">
+          
+          <div class="form-group">
+            <label for="dealTitleInput">Nama Proyek / Deal</label>
+            <input type="text" id="dealTitleInput" required placeholder="Contoh: Redesign Website & UI/UX App Mobile">
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="dealClientSelect">Klien / Perusahaan</label>
+              <select id="dealClientSelect" required>
+                <!-- Populated by JS -->
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="dealServiceCategory">Kategori Layanan</label>
+              <select id="dealServiceCategory">
+                <option value="Web Development">Web Development</option>
+                <option value="UI/UX Design">UI/UX Design</option>
+                <option value="Branding & Visual">Branding & Visual</option>
+                <option value="Social Media & Ads">Social Media & Ads</option>
+                <option value="Mobile App">Mobile App</option>
+                <option value="SEO & Copywriting">SEO & Copywriting</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="dealValueInput">Estimasi Nilai Deal (Rp)</label>
+              <input type="number" id="dealValueInput" required placeholder="Contoh: 12500000" min="100000">
+            </div>
+            <div class="form-group">
+              <label for="dealStageSelect">Tahap Pipeline (Stage)</label>
+              <select id="dealStageSelect">
+                <option value="LEAD">1. Prospek Baru (Lead In)</option>
+                <option value="DISCOVERY">2. Briefing / Diskusi</option>
+                <option value="PROPOSAL">3. Proposal Terkirim</option>
+                <option value="NEGOTIATION">4. Negosiasi Harga</option>
+                <option value="WON">5. Deal Aktif (Won)</option>
+                <option value="COMPLETED">6. Selesai & Lunas</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="dealPrioritySelect">Tingkat Prioritas</label>
+              <select id="dealPrioritySelect">
+                <option value="High">Tinggi (High Priority)</option>
+                <option value="Medium" selected>Sedang (Medium)</option>
+                <option value="Low">Rendah (Low)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="dealDeadlineInput">Target Deadline / Kickoff</label>
+              <input type="date" id="dealDeadlineInput">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="dealNotesInput">Catatan Tambahan / Kebutuhan Klien</label>
+            <textarea id="dealNotesInput" rows="2" placeholder="Catatan scope project, deliverables, atau kesepakatan khusus..."></textarea>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn-secondary" id="btnCancelDealModal">Batal</button>
+            <button type="submit" class="btn-primary">Simpan Deal</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: TAMBAH KLIEN -->
+  <div class="modal-backdrop" id="clientModal" hidden>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Tambah Kontak Klien Baru</h3>
+          <button type="button" class="btn-close" id="btnCloseClientModal">&times;</button>
+        </div>
+        <form id="formClient" class="modal-form">
+          <div class="form-group">
+            <label for="clientCompanyInput">Nama Brand / Perusahaan</label>
+            <input type="text" id="clientCompanyInput" required placeholder="Contoh: PT. Sumber Sukses Berdikari">
+          </div>
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="clientPersonInput">Contact Person (PIC)</label>
+              <input type="text" id="clientPersonInput" required placeholder="Contoh: Bpk. Dimas Ardiansyah">
+            </div>
+            <div class="form-group">
+              <label for="clientTierSelect">Kategori Klien</label>
+              <select id="clientTierSelect">
+                <option value="Aktif">Klien Aktif</option>
+                <option value="VIP">Klien VIP</option>
+                <option value="Prospek">Calon Klien</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="clientWaInput">No. WhatsApp</label>
+              <input type="tel" id="clientWaInput" required placeholder="Contoh: 081234567890">
+            </div>
+            <div class="form-group">
+              <label for="clientEmailInput">Email Perusahaan</label>
+              <input type="email" id="clientEmailInput" placeholder="kontak@perusahaan.com">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="clientCityInput">Kota Domisili</label>
+            <input type="text" id="clientCityInput" placeholder="Contoh: Yogyakarta / Jakarta Selatan">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn-secondary" id="btnCancelClientModal">Batal</button>
+            <button type="submit" class="btn-primary">Simpan Klien</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: GENERATE / EDIT INVOICE -->
+  <div class="modal-backdrop" id="invoiceModal" hidden>
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="invoiceModalTitle">Buat Invoice Baru</h3>
+          <button type="button" class="btn-close" id="btnCloseInvoiceModal">&times;</button>
+        </div>
+        <form id="formInvoice" class="modal-form">
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="invNumberInput">Nomor Invoice</label>
+              <input type="text" id="invNumberInput" required value="INV/2026/XI/001">
+            </div>
+            <div class="form-group">
+              <label for="invClientSelect">Ditagihkan Kepada (Klien)</label>
+              <select id="invClientSelect" required>
+                <!-- Populated by JS -->
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="invDateInput">Tanggal Terbit</label>
+              <input type="date" id="invDateInput" required>
+            </div>
+            <div class="form-group">
+              <label for="invDueDateInput">Jatuh Tempo Pembayaran</label>
+              <input type="date" id="invDueDateInput" required>
+            </div>
+          </div>
+
+          <!-- Line Items Table -->
+          <div class="inv-items-box">
+            <div class="inv-items-head">
+              <h4>Rincian Layanan / Item Jasa</h4>
+              <button type="button" class="btn-sm-secondary" id="btnAddInvoiceItem">+ Tambah Baris Jasa</button>
+            </div>
+            <div id="invoiceItemsList" class="inv-items-table">
+              <!-- Item rows populated by JS -->
+            </div>
+          </div>
+
+          <!-- Invoice Summary -->
+          <div class="inv-totals-box">
+            <div class="inv-tot-row">
+              <span>Subtotal:</span>
+              <strong id="invSubtotalDisplay">Rp 0</strong>
+            </div>
+            <div class="inv-tot-row">
+              <label for="invTaxInput">PPN 11% (Opsional):</label>
+              <input type="checkbox" id="invTaxCheck">
+            </div>
+            <div class="inv-tot-row grand-total">
+              <span>Total Tagihan:</span>
+              <strong id="invGrandTotalDisplay">Rp 0</strong>
+            </div>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="invStatusSelect">Status Tagihan</label>
+              <select id="invStatusSelect">
+                <option value="Menunggu Pembayaran">Menunggu Pembayaran</option>
+                <option value="Menunggu DP 50%">Menunggu DP 50%</option>
+                <option value="Lunas">Lunas</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="invBankSelect">Metode Pembayaran (Rekening)</label>
+              <select id="invBankSelect">
+                <option value="BCA 8020-4567-89 (A.n NalaNiaga Kreatif)">BCA 8020-4567-89 (A.n NalaNiaga Kreatif)</option>
+                <option value="Mandiri 137-00-1234567-8 (A.n NalaNiaga)">Mandiri 137-00-1234567-8 (A.n NalaNiaga)</option>
+                <option value="BSI 712-345-6789 (A.n NalaNiaga)">BSI 712-345-6789 (A.n NalaNiaga)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn-secondary" id="btnCancelInvoiceModal">Batal</button>
+            <button type="submit" class="btn-primary">Simpan & Terbitkan Invoice</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: CETAK / PREVIEW RESMI INVOICE (A4) -->
+  <div class="modal-backdrop" id="printInvoiceModal" hidden>
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header no-print">
+          <h3>Pratinjau Lembar Tagihan Resmi</h3>
+          <button type="button" class="btn-close" id="btnClosePrintModal">&times;</button>
+        </div>
+
+        <!-- PRINTABLE INVOICE SHEET -->
+        <div class="printable-invoice" id="printableInvoiceSheet">
+          <div class="inv-sheet-header">
+            <div class="inv-agency-brand">
+              <div class="inv-logo-mark">NALANIAGA</div>
+              <p class="inv-agency-desc">Studio Desain & Pengembangan Solusi Digital</p>
+              <p class="inv-agency-contact">Jl. Parangtritis Km 4.5, Mantrijeron, Yogyakarta • Email: halo@nalaniaga.id • Telp: (0274) 456789</p>
+            </div>
+            <div class="inv-badge-block">
+              <h1 class="inv-title-main">INVOICE</h1>
+              <div class="inv-meta-tag" id="prnInvNumber">INV/2026/XI/001</div>
+              <div class="inv-status-stamp" id="prnInvStatus">BELUM LUNAS</div>
+            </div>
+          </div>
+
+          <div class="inv-divider"></div>
+
+          <div class="inv-billing-details">
+            <div class="bill-col">
+              <span class="bill-label">DITAGIHKAN KEPADA:</span>
+              <h4 id="prnClientName">PT. Sumber Sukses</h4>
+              <p id="prnClientPic">Up: Bpk. Dimas Ardiansyah</p>
+              <p id="prnClientContact">081234567890 • klien@sumber.com</p>
+              <p id="prnClientCity">Yogyakarta</p>
+            </div>
+            <div class="bill-col text-right">
+              <div class="date-row"><span>Tanggal Terbit:</span> <strong id="prnInvDate">22 Nov 2026</strong></div>
+              <div class="date-row"><span>Jatuh Tempo:</span> <strong id="prnInvDueDate">06 Des 2026</strong></div>
+            </div>
+          </div>
+
+          <table class="inv-print-table">
+            <thead>
+              <tr>
+                <th>Deskripsi Jasa / Deliverables</th>
+                <th class="text-center">Kuantitas</th>
+                <th class="text-right">Tarif Satuan</th>
+                <th class="text-right">Total (Rp)</th>
+              </tr>
+            </thead>
+            <tbody id="prnItemsTableBody">
+              <!-- Rendered by JS -->
+            </tbody>
+          </table>
+
+          <div class="inv-calc-summary">
+            <div class="calc-box">
+              <div class="calc-row"><span>Subtotal:</span> <strong id="prnSubtotal">Rp 0</strong></div>
+              <div class="calc-row"><span>PPN (11%):</span> <strong id="prnTax">Rp 0</strong></div>
+              <div class="calc-row total-highlight"><span>TOTAL TAGIHAN:</span> <strong id="prnGrandTotal">Rp 0</strong></div>
+            </div>
+          </div>
+
+          <div class="inv-sheet-footer">
+            <div class="payment-instructions">
+              <h4>Informasi Rekening Pembayaran:</h4>
+              <p id="prnBankInfo">BCA 8020-4567-89 A.n NalaNiaga Kreatif</p>
+              <p>Mohon kirimkan bukti transfer pelunasan melalui WhatsApp Admin kami.</p>
+            </div>
+            <div class="signature-box">
+              <p>Hormat kami,</p>
+              <div class="sign-space"></div>
+              <strong>NalaNiaga Finance & Operations</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer no-print">
+          <button type="button" class="btn-secondary" id="btnDonePrintModal">Tutup</button>
+          <button type="button" class="btn-wa" id="btnSendInvoiceWa">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2m.01 1.67c4.54 0 8.24 3.7 8.24 8.24 0 2.2-.86 4.27-2.42 5.82a8.19 8.19 0 0 1-5.82 2.42c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.25-4.38c0-4.54 3.7-8.24 8.24-8.24m4.51 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.24-.75-.67-1.25-1.49-1.4-1.74-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.14.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.78 2.72 4.31 3.81.6.26 1.07.42 1.44.53.61.2 1.16.17 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.17-.48-.29"/></svg>
+            <span>Kirim Invoice via WhatsApp</span>
+          </button>
+          <button type="button" class="btn-primary" id="btnTriggerPrint">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+            <span>Cetak / Simpan PDF</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: TAMBAH FOLLOW-UP -->
+  <div class="modal-backdrop" id="followupModal" hidden>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Catat Pengingat Follow-up</h3>
+          <button type="button" class="btn-close" id="btnCloseFollowupModal">&times;</button>
+        </div>
+        <form id="formFollowup" class="modal-form">
+          <div class="form-group">
+            <label for="fuDealSelect">Terkait Proyek / Klien</label>
+            <select id="fuDealSelect" required>
+              <!-- Populated by JS -->
+            </select>
+          </div>
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="fuDateInput">Tanggal Follow-up</label>
+              <input type="date" id="fuDateInput" required>
+            </div>
+            <div class="form-group">
+              <label for="fuTypeSelect">Tipe Aktivitas</label>
+              <select id="fuTypeSelect">
+                <option value="WhatsApp">Chat WhatsApp</option>
+                <option value="Zoom Meeting">Meeting Online / Zoom</option>
+                <option value="Kirim Proposal">Kirim Proposal / Penawaran</option>
+                <option value="Penagihan DP / Invoice">Penagihan DP / Invoice</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="fuNoteInput">Rincian / Topik Follow-up</label>
+            <textarea id="fuNoteInput" rows="2" required placeholder="Contoh: Menanyakan feedback klien terkait mockup halaman beranda..."></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn-secondary" id="btnCancelFollowupModal">Batal</button>
+            <button type="submit" class="btn-primary">Simpan Pengingat</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <footer class="app-footer no-print">
+    <div class="container-fluid footer-inner">
+      <p>&copy; 2026 NalaNiaga — Sistem CRM & Manajemen Klien Agensi Modern. Dirancang Responsif & Offline-Ready.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "name": "NalaNiaga — CRM Freelancer & Agensi",
+  "short_name": "NalaNiaga",
+  "description": "Sistem CRM, Pipeline Deals & Generator Invoice untuk Freelancer dan Agensi Kreatif",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4f46e5",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
